@@ -1,0 +1,135 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#111111">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="16dp"
+        android:orientation="vertical">
+
+        <!-- 흰 카드 -->
+        <LinearLayout
+            android:id="@+id/cardRoot"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@android:color/white"
+            android:padding="18dp"
+            android:orientation="vertical">
+
+            <!-- TimeCatch -->
+            <TextView
+                android:id="@+id/tvTitle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="TimeCatch"
+                android:textStyle="bold"
+                android:textSize="22sp"
+                android:textColor="#2D2BB3" />
+
+            <!-- 날짜 선택 -->
+            <TextView
+                android:layout_marginTop="18dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="날짜 선택"
+                android:textStyle="bold"
+                android:textSize="14sp"
+                android:textColor="#111111" />
+
+            <!-- 달력(고정 표시) -->
+            <CalendarView
+                android:id="@+id/calendarView"
+                android:layout_marginTop="8dp"
+                android:layout_width="match_parent"
+                android:layout_height="280dp"
+                android:firstDayOfWeek="2" />
+
+            <!-- (선택된 날짜 표시 - 작게) -->
+            <TextView
+                android:id="@+id/tvSelectedDate"
+                android:layout_marginTop="6dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="선택된 날짜: 없음"
+                android:textSize="12sp"
+                android:textColor="#666666" />
+
+            <!-- 친구 초대 -->
+            <TextView
+                android:layout_marginTop="18dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="친구 초대"
+                android:textStyle="bold"
+                android:textSize="14sp"
+                android:textColor="#111111" />
+
+            <LinearLayout
+                android:layout_marginTop="10dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <EditText
+                    android:id="@+id/etFriendId"
+                    android:layout_width="0dp"
+                    android:layout_height="44dp"
+                    android:layout_weight="1"
+                    android:hint="친구의 아이디를 입력해주세요."
+                    android:background="@android:drawable/edit_text"
+                    android:paddingLeft="12dp"
+                    android:paddingRight="12dp"
+                    android:singleLine="true" />
+
+                <Button
+                    android:id="@+id/btnAddFriend"
+                    android:layout_width="90dp"
+                    android:layout_height="44dp"
+                    android:layout_marginLeft="10dp"
+                    android:text="추가"
+                    android:textColor="@android:color/white"
+                    android:background="@drawable/bg_btn_small"
+                    android:backgroundTint="@null"
+                    android:paddingLeft="0dp"
+                    android:paddingRight="0dp" />
+
+
+            </LinearLayout>
+
+            <TextView
+                android:layout_marginTop="10dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="초대된 친구들"
+                android:textSize="12sp"
+                android:textColor="#666666" />
+
+            <TextView
+                android:id="@+id/tvInvitedList"
+                android:layout_marginTop="6dp"
+                android:layout_width="match_parent"
+                android:layout_height="110dp"
+                android:background="@android:drawable/edit_text"
+                android:padding="12dp"
+                android:text="(아직 없음)"
+                android:textColor="#111111"
+                android:textSize="13sp" />
+
+            <Button
+                android:id="@+id/btnCreateGroup"
+                android:layout_marginTop="20dp"
+                android:layout_width="match_parent"
+                android:layout_height="54dp"
+                android:text="그룹 생성"
+                android:textColor="@android:color/white"
+                android:textStyle="bold"
+                android:background="@drawable/bg_btn_primary"
+                android:backgroundTint="@null" />
+
+
+        </LinearLayout>
+    </LinearLayout>
+</ScrollView>
