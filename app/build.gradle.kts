@@ -4,11 +4,11 @@ plugins {
 }
 
 android {
-    namespace = "com.example.timecatch"
+    namespace = "com.example.guru"
     compileSdk = 36
 
     defaultConfig {
-        applicationId = "com.example.timecatch"
+        applicationId = "com.example.guru"
         minSdk = 24
         targetSdk = 36
         versionCode = 1
