@@ -1,13 +1,17 @@
 plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.android)
+    id("kotlin-kapt")
 }
 
 android {
-    namespace = "com.example.timecatch"
-    compileSdk {
-        version = release(36)
+
+    buildFeatures {
+        viewBinding = true
     }
+
+    namespace = "com.example.timecatch"
+    compileSdk = 36
 
     defaultConfig {
         applicationId = "com.example.timecatch"
@@ -17,11 +21,6 @@ android {
         versionName = "1.0"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
-    }
-
-    // ✅ Step 2: ViewBinding 켜기 (이거 없으면 ActivityGroupCreateBinding이 안 생김)
-    buildFeatures {
-        viewBinding = true
     }
 
     buildTypes {
@@ -43,6 +42,7 @@ android {
 }
 
 dependencies {
+
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.appcompat)
     implementation(libs.material)
@@ -52,6 +52,8 @@ dependencies {
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
 
-    // ⚠️ libs.material 이미 있는데 중복임. 하나만 써도 됨.
-    // implementation("com.google.android.material:material:1.12.0")
+    val room_version = "2.6.1"
+    implementation("androidx.room:room-runtime:$room_version")
+    implementation("androidx.room:room-ktx:$room_version")
+    kapt("androidx.room:room-compiler:$room_version")
 }
