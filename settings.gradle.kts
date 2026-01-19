@@ -19,6 +19,5 @@ dependencyResolutionManagement {
     }
 }
 
-rootProject.name = "TimeCatch"
+rootProject.name = "GURU"
 include(":app")
- 
