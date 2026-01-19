@@ -7,4 +7,12 @@
         <item name="android:navigationBarColor">@android:color/white</item>
         <item name="android:windowLightStatusBar">true</item>
     </style>
+    <style name="PurpleCalendarTheme" parent="ThemeOverlay.AppCompat.Light">
+        <item name="colorAccent">#2D2FA8</item>
+    </style>
+    <style name="Theme.Transparent" parent="Theme.MaterialComponents.DayNight.NoActionBar">
+        <item name="android:windowBackground">@android:color/transparent</item>
+        <item name="android:windowIsTranslucent">true</item>
+        <item name="android:windowAnimationStyle">@null</item>
+    </style>
 </resources>

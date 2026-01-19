@@ -1,0 +1,201 @@
+Index: app/src/main/res/layout/activity_my_schedule.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/app/src/main/res/layout/activity_my_schedule.xml b/app/src/main/res/layout/activity_my_schedule.xml
+new file mode 100644
+--- /dev/null	(date 1768836050023)
++++ b/app/src/main/res/layout/activity_my_schedule.xml	(date 1768836050023)
+@@ -0,0 +1,10 @@
++<?xml version="1.0" encoding="utf-8"?>
++<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
++    xmlns:app="http://schemas.android.com/apk/res-auto"
++    xmlns:tools="http://schemas.android.com/tools"
++    android:id="@+id/main"
++    android:layout_width="match_parent"
++    android:layout_height="match_parent"
++    tools:context=".MyScheduleActivity">
++
++</androidx.constraintlayout.widget.ConstraintLayout>
+\ No newline at end of file
+Index: app/src/main/res/layout/activity_group_detail.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/app/src/main/res/layout/activity_group_detail.xml b/app/src/main/res/layout/activity_group_detail.xml
+new file mode 100644
+--- /dev/null	(date 1768836228460)
++++ b/app/src/main/res/layout/activity_group_detail.xml	(date 1768836228460)
+@@ -0,0 +1,10 @@
++<?xml version="1.0" encoding="utf-8"?>
++<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
++    xmlns:app="http://schemas.android.com/apk/res-auto"
++    xmlns:tools="http://schemas.android.com/tools"
++    android:id="@+id/main"
++    android:layout_width="match_parent"
++    android:layout_height="match_parent"
++    tools:context=".GroupDetailActivity">
++
++</androidx.constraintlayout.widget.ConstraintLayout>
+\ No newline at end of file
+Index: app/src/main/java/com/example/timecatch/MyScheduleActivity.kt
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/app/src/main/java/com/example/timecatch/MyScheduleActivity.kt b/app/src/main/java/com/example/timecatch/MyScheduleActivity.kt
+new file mode 100644
+--- /dev/null	(date 1768836049935)
++++ b/app/src/main/java/com/example/timecatch/MyScheduleActivity.kt	(date 1768836049935)
+@@ -0,0 +1,20 @@
++package com.example.timecatch
++
++import android.os.Bundle
++import androidx.activity.enableEdgeToEdge
++import androidx.appcompat.app.AppCompatActivity
++import androidx.core.view.ViewCompat
++import androidx.core.view.WindowInsetsCompat
++
++class MyScheduleActivity : AppCompatActivity() {
++    override fun onCreate(savedInstanceState: Bundle?) {
++        super.onCreate(savedInstanceState)
++        enableEdgeToEdge()
++        setContentView(R.layout.activity_my_schedule)
++        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main)) { v, insets ->
++            val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
++            v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
++            insets
++        }
++    }
++}
+\ No newline at end of file
+Index: .idea/misc.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+><?xml version=\"1.0\" encoding=\"UTF-8\"?>\r\n<project version=\"4\">\r\n  <component name=\"ExternalStorageConfigurationManager\" enabled=\"true\" />\r\n  <component name=\"ProjectRootManager\" version=\"2\" languageLevel=\"JDK_1_7\">\r\n    <output url=\"file://$PROJECT_DIR$/build/classes\" />\r\n  </component>\r\n  <component name=\"ProjectType\">\r\n    <option name=\"id\" value=\"Android\" />\r\n  </component>\r\n</project>
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/.idea/misc.xml b/.idea/misc.xml
+--- a/.idea/misc.xml	(revision 3811f78d6e444e3dc2f083842457d6bdca6ea9d3)
++++ b/.idea/misc.xml	(date 1768836826350)
+@@ -1,7 +1,7 @@
+ <?xml version="1.0" encoding="UTF-8"?>
+ <project version="4">
+   <component name="ExternalStorageConfigurationManager" enabled="true" />
+-  <component name="ProjectRootManager" version="2" languageLevel="JDK_1_7">
++  <component name="ProjectRootManager" version="2" languageLevel="JDK_21" default="true" project-jdk-name="jbr-21" project-jdk-type="JavaSDK">
+     <output url="file://$PROJECT_DIR$/build/classes" />
+   </component>
+   <component name="ProjectType">
+Index: app/src/main/java/com/example/timecatch/MyPageActivity.kt
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/app/src/main/java/com/example/timecatch/MyPageActivity.kt b/app/src/main/java/com/example/timecatch/MyPageActivity.kt
+new file mode 100644
+--- /dev/null	(date 1768836027425)
++++ b/app/src/main/java/com/example/timecatch/MyPageActivity.kt	(date 1768836027425)
+@@ -0,0 +1,20 @@
++package com.example.timecatch
++
++import android.os.Bundle
++import androidx.activity.enableEdgeToEdge
++import androidx.appcompat.app.AppCompatActivity
++import androidx.core.view.ViewCompat
++import androidx.core.view.WindowInsetsCompat
++
++class MyPageActivity : AppCompatActivity() {
++    override fun onCreate(savedInstanceState: Bundle?) {
++        super.onCreate(savedInstanceState)
++        enableEdgeToEdge()
++        setContentView(R.layout.activity_my_page)
++        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main)) { v, insets ->
++            val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
++            v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
++            insets
++        }
++    }
++}
+\ No newline at end of file
+Index: app/src/main/res/layout/activity_my_page.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/app/src/main/res/layout/activity_my_page.xml b/app/src/main/res/layout/activity_my_page.xml
+new file mode 100644
+--- /dev/null	(date 1768836027645)
++++ b/app/src/main/res/layout/activity_my_page.xml	(date 1768836027645)
+@@ -0,0 +1,10 @@
++<?xml version="1.0" encoding="utf-8"?>
++<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
++    xmlns:app="http://schemas.android.com/apk/res-auto"
++    xmlns:tools="http://schemas.android.com/tools"
++    android:id="@+id/main"
++    android:layout_width="match_parent"
++    android:layout_height="match_parent"
++    tools:context=".MyPageActivity">
++
++</androidx.constraintlayout.widget.ConstraintLayout>
+\ No newline at end of file
+Index: app/src/main/AndroidManifest.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+><?xml version=\"1.0\" encoding=\"utf-8\"?>\r\n<manifest xmlns:android=\"http://schemas.android.com/apk/res/android\"\r\n    xmlns:tools=\"http://schemas.android.com/tools\">\r\n\r\n    <application\r\n        android:allowBackup=\"true\"\r\n        android:dataExtractionRules=\"@xml/data_extraction_rules\"\r\n        android:fullBackupContent=\"@xml/backup_rules\"\r\n        android:icon=\"@mipmap/ic_launcher\"\r\n        android:label=\"@string/app_name\"\r\n        android:roundIcon=\"@mipmap/ic_launcher_round\"\r\n        android:supportsRtl=\"true\"\r\n        android:theme=\"@style/Theme.TimeCatch\">\r\n        <activity\r\n            android:name=\".MainActivity\"\r\n            android:exported=\"true\">\r\n            <intent-filter>\r\n                <action android:name=\"android.intent.action.MAIN\" />\r\n\r\n                <category android:name=\"android.intent.category.LAUNCHER\" />\r\n            </intent-filter>\r\n        </activity>\r\n    </application>\r\n\r\n</manifest>
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/app/src/main/AndroidManifest.xml b/app/src/main/AndroidManifest.xml
+--- a/app/src/main/AndroidManifest.xml	(revision 3811f78d6e444e3dc2f083842457d6bdca6ea9d3)
++++ b/app/src/main/AndroidManifest.xml	(date 1768836228428)
+@@ -12,6 +12,15 @@
+         android:supportsRtl="true"
+         android:theme="@style/Theme.TimeCatch">
+         <activity
++            android:name=".GroupDetailActivity"
++            android:exported="false" />
++        <activity
++            android:name=".MyScheduleActivity"
++            android:exported="false" />
++        <activity
++            android:name=".MyPageActivity"
++            android:exported="false" />
++        <activity
+             android:name=".MainActivity"
+             android:exported="true">
+             <intent-filter>
+Index: app/src/main/java/com/example/timecatch/GroupDetailActivity.kt
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/app/src/main/java/com/example/timecatch/GroupDetailActivity.kt b/app/src/main/java/com/example/timecatch/GroupDetailActivity.kt
+new file mode 100644
+--- /dev/null	(date 1768836228376)
++++ b/app/src/main/java/com/example/timecatch/GroupDetailActivity.kt	(date 1768836228376)
+@@ -0,0 +1,20 @@
++package com.example.timecatch
++
++import android.os.Bundle
++import androidx.activity.enableEdgeToEdge
++import androidx.appcompat.app.AppCompatActivity
++import androidx.core.view.ViewCompat
++import androidx.core.view.WindowInsetsCompat
++
++class GroupDetailActivity : AppCompatActivity() {
++    override fun onCreate(savedInstanceState: Bundle?) {
++        super.onCreate(savedInstanceState)
++        enableEdgeToEdge()
++        setContentView(R.layout.activity_group_detail)
++        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main)) { v, insets ->
++            val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
++            v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
++            insets
++        }
++    }
++}
+\ No newline at end of file
