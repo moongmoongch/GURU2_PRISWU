@@ -12,6 +12,12 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.TimeCatch">
         <activity
+            android:name=".ScheduleManageActivity"
+            android:exported="false" />
+        <activity
+            android:name=".activity_schedule_manage"
+            android:exported="false" />
+        <activity
             android:name=".HomeActivity"
             android:exported="true">
             <intent-filter>

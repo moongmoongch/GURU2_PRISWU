@@ -1,0 +1,127 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/tc_bg">
+
+    <!-- 상단 바 -->
+    <ImageButton
+        android:id="@+id/btnBack"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
+        android:background="@android:color/transparent"
+        android:src="@android:drawable/ic_media_previous"
+        android:tint="@color/tc_text_dark"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"/>
+
+    <TextView
+        android:id="@+id/tvTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="일정 관리"
+        android:textStyle="bold"
+        android:textSize="18sp"
+        android:textColor="@color/tc_primary"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginTop="22dp"/>
+
+    <!-- 월 이동 영역 -->
+    <ImageButton
+        android:id="@+id/btnPrevMonth"
+        android:layout_width="36dp"
+        android:layout_height="36dp"
+        android:layout_marginStart="16dp"
+        android:background="@android:color/transparent"
+        android:src="@android:drawable/arrow_left"
+        android:tint="@color/tc_text_dark"
+        app:layout_constraintTop_toBottomOf="@id/tvTitle"
+        app:layout_constraintStart_toStartOf="parent"
+        android:layout_marginTop="20dp"/>
+
+    <TextView
+        android:id="@+id/tvMonth"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="2026년 1월"
+        android:textSize="14sp"
+        android:textColor="@color/tc_text_dark"
+        app:layout_constraintTop_toTopOf="@id/btnPrevMonth"
+        app:layout_constraintBottom_toBottomOf="@id/btnPrevMonth"
+        app:layout_constraintStart_toEndOf="@id/btnPrevMonth"
+        app:layout_constraintEnd_toStartOf="@id/btnNextMonth"/>
+
+    <ImageButton
+        android:id="@+id/btnNextMonth"
+        android:layout_width="36dp"
+        android:layout_height="36dp"
+        android:layout_marginEnd="16dp"
+        android:background="@android:color/transparent"
+        android:src="@android:drawable/arrow_right"
+        android:tint="@color/tc_text_dark"
+        app:layout_constraintTop_toTopOf="@id/btnPrevMonth"
+        app:layout_constraintBottom_toBottomOf="@id/btnPrevMonth"
+        app:layout_constraintEnd_toEndOf="parent"/>
+
+    <!-- 달력 -->
+    <CalendarView
+        android:id="@+id/calendarView"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginEnd="16dp"
+        app:layout_constraintTop_toBottomOf="@id/btnPrevMonth"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginTop="8dp"/>
+
+    <!-- 선택된 날짜 표시 -->
+    <TextView
+        android:id="@+id/tvSelectedDate"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="2026-01-19 일정"
+        android:textStyle="bold"
+        android:textColor="@color/tc_text_dark"
+        android:layout_marginStart="16dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginTop="12dp"
+        app:layout_constraintTop_toBottomOf="@id/calendarView"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"/>
+
+    <!-- 일정 리스트 -->
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rvSchedules"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginTop="8dp"
+        app:layout_constraintTop_toBottomOf="@id/tvSelectedDate"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/btnAddSchedule"/>
+
+    <!-- + 일정 추가 버튼 -->
+    <Button
+        android:id="@+id/btnAddSchedule"
+        android:layout_width="0dp"
+        android:layout_height="44dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginBottom="20dp"
+        android:text="+ 일정 추가하세요"
+        android:textColor="@color/tc_hint"
+        android:background="@drawable/bg_btn_disabled"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"/>
+
+</androidx.constraintlayout.widget.ConstraintLayout>
