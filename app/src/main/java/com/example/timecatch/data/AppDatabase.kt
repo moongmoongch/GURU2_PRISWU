@@ -1,11 +1,11 @@
-package com.example.timecatch
+package com.example.timecatch.data
 
 import android.content.Context
 import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
-import com.example.timecatch.data.UserDao
-import com.example.timecatch.data.UserEntity
+import com.example.timecatch.Group
+import com.example.timecatch.GroupDao
 
 @Database(
     entities = [
@@ -21,19 +21,16 @@ abstract class AppDatabase : RoomDatabase() {
     abstract fun userDao(): UserDao
 
     companion object {
-        @Volatile
-        private var INSTANCE: AppDatabase? = null
+        @Volatile private var INSTANCE: AppDatabase? = null
 
         fun getDatabase(context: Context): AppDatabase {
             return INSTANCE ?: synchronized(this) {
                 val instance = Room.databaseBuilder(
                     context.applicationContext,
                     AppDatabase::class.java,
-                    "timecatch_database"
+                    "timecatch.db"
                 )
-
-                    .allowMainThreadQueries()
-
+                    // 팀플 중 스키마 자주 바뀌면 일단 이걸로 막힘 방지
                     .fallbackToDestructiveMigration()
                     .build()
 
