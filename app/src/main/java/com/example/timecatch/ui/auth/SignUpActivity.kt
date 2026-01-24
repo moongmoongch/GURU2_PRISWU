@@ -30,17 +30,17 @@ class SignUpActivity : AppCompatActivity() {
             val pw2 = binding.etPassword2.text.toString().trim()
 
             if (name.isEmpty() || email.isEmpty() || pw1.isEmpty() || pw2.isEmpty()) {
-                Toast.makeText(this, "빈칸부터 채워줘", Toast.LENGTH_SHORT).show()
+                Toast.makeText(this, "빈칸을 채워주세요.", Toast.LENGTH_SHORT).show()
                 return@setOnClickListener
             }
 
             if (pw1 != pw2) {
-                Toast.makeText(this, "비밀번호가 서로 달라", Toast.LENGTH_SHORT).show()
+                Toast.makeText(this, "비밀번호가 서로 다릅니다.", Toast.LENGTH_SHORT).show()
                 return@setOnClickListener
             }
 
             if (!binding.cbAgree.isChecked) {
-                Toast.makeText(this, "약관 동의 체크해줘", Toast.LENGTH_SHORT).show()
+                Toast.makeText(this, "약관 동의에 체크해주세요.", Toast.LENGTH_SHORT).show()
                 return@setOnClickListener
             }
 
@@ -51,7 +51,7 @@ class SignUpActivity : AppCompatActivity() {
                     }
 
                     if (exists) {
-                        Toast.makeText(this@SignUpActivity, "이미 가입된 이메일이야", Toast.LENGTH_SHORT).show()
+                        Toast.makeText(this@SignUpActivity, "이미 가입된 이메일입니다.", Toast.LENGTH_SHORT).show()
                         return@launch
                     }
 
@@ -65,7 +65,7 @@ class SignUpActivity : AppCompatActivity() {
                         )
                     }
 
-                    Toast.makeText(this@SignUpActivity, "회원가입 완료! 로그인 해줘", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(this@SignUpActivity, "회원가입 완료되었습니다. 로그인을 해주세요.", Toast.LENGTH_SHORT).show()
 
                     // 회원가입 완료 후 -> 로그인으로 복귀
                     val intent = Intent(this@SignUpActivity, LoginActivity::class.java)

@@ -28,7 +28,7 @@ class LoginActivity : AppCompatActivity() {
             val pw = binding.etPassword.text.toString().trim()
 
             if (email.isEmpty() || pw.isEmpty()) {
-                Toast.makeText(this, "이메일/비번 입력해줘", Toast.LENGTH_SHORT).show()
+                Toast.makeText(this, "이메일/비번을 입력해주세요", Toast.LENGTH_SHORT).show()
                 return@setOnClickListener
             }
 
