@@ -5,7 +5,7 @@ import android.os.Bundle
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.lifecycleScope
-import com.example.timecatch.HomeActivity
+import com.example.timecatch.MainActivity
 import com.example.timecatch.data.AppDatabase
 import com.example.timecatch.databinding.ActivityLoginBinding
 import kotlinx.coroutines.Dispatchers
@@ -40,7 +40,7 @@ class LoginActivity : AppCompatActivity() {
 
                     if (user != null) {
                         Toast.makeText(this@LoginActivity, "로그인 성공", Toast.LENGTH_SHORT).show()
-                        startActivity(Intent(this@LoginActivity, HomeActivity::class.java))
+                        startActivity(Intent(this@LoginActivity, MainActivity::class.java))
                         finish()
                     } else {
                         Toast.makeText(this@LoginActivity, "로그인 실패 (정보 확인)", Toast.LENGTH_SHORT).show()
