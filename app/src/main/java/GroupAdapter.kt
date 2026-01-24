@@ -21,11 +21,20 @@ class GroupAdapter(private val onItemClick: (Group) -> Unit) :
 
     inner class GroupViewHolder(private val binding: ItemGroupBinding) : RecyclerView.ViewHolder(binding.root) {
         fun bind(group: Group) {
-            // 변수 이름이 바뀌었어도 걱정 마세요.
-            // Group.kt에 정의된 변수명(groupName, targetDate)을 그대로 씁니다.
             binding.tvGroupName.text = group.groupName
-            binding.tvGroupDate.text = group.targetDate ?: "날짜 미정"
 
+            // ▼▼▼ [수정] 확정 여부에 따라 다르게 표시하기 ▼▼▼
+            if (group.confirmedTime != null) {
+                // 1. 확정된 시간이 있을 때 (파란색 강조)
+                binding.tvGroupDate.text = "✅ 확정: ${group.confirmedTime}"
+                binding.tvGroupDate.setTextColor(android.graphics.Color.parseColor("#2D2FA8"))
+                binding.tvGroupDate.setTypeface(null, android.graphics.Typeface.BOLD)
+            } else {
+                // 2. 아직 미정일 때 (원래 날짜 표시, 회색)
+                binding.tvGroupDate.text = group.targetDate
+                binding.tvGroupDate.setTextColor(android.graphics.Color.parseColor("#888888"))
+                binding.tvGroupDate.setTypeface(null, android.graphics.Typeface.NORMAL)
+            }
             binding.root.setOnClickListener {
                 onItemClick(group)
             }
