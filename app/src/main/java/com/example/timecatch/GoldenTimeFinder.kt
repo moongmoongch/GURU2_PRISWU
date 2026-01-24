@@ -1,6 +1,7 @@
-package com.example.timecatch.com.example.timecatch
+package com.example.timecatch
 
-import kotlin.collections.iterator
+import java.time.LocalTime
+import java.time.format.DateTimeFormatter
 
 // 1. 결과 데이터를 담을 그릇 (화면에 보여줄 정보)
 data class GoldenTimeResult(
