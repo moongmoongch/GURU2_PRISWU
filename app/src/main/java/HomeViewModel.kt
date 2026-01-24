@@ -1,24 +1,28 @@
 package com.example.timecatch
 
+import android.app.Application
+import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
-import androidx.lifecycle.viewModelScope
-import kotlinx.coroutines.launch
+import com.example.timecatch.data.AppDatabase
+class HomeViewModel(application: Application) : AndroidViewModel(application) {
 
-class HomeViewModel : ViewModel() {
-
-    // 1. 내부에서만 수정 가능한 MutableLiveData
+    private val db = AppDatabase.getDatabase(application)
     private val _myGroups = MutableLiveData<List<Group>>()
+    val myGroups: LiveData<List<Group>> get() = _myGroups
 
-    // 2. 외부(MainActivity)에서 관찰만 가능한 LiveData
-    val myGroups: LiveData<List<Group>> = _myGroups
+    // 앱 켜질 때 자동 실행 아님! (MainActivity가 시킬 때만 함)
+    // init { fetchMyGroups() }  <-- 이거 지움
 
     fun fetchMyGroups() {
-        viewModelScope.launch {
-            // TODO: Room DB에서 데이터를 가져오는 로직을 넣으세요.
-            // 지금은 에러를 해결하기 위해 빈 리스트를 넣어줍니다.
-            _myGroups.value = listOf()
+        // 테스트 데이터 만드는 코드 다 삭제!
+        // 오직 DB에서 가져오는 코드만 남김
+        try {
+            val savedGroups = db.groupDao().getAllGroups()
+            _myGroups.value = savedGroups
+        } catch (e: Exception) {
+            e.printStackTrace()
+            _myGroups.value = emptyList()
         }
     }
 }
