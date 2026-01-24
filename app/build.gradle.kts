@@ -58,4 +58,9 @@ dependencies {
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
+    // ViewModel scope를 사용하기 위해 필요한 라이브러리
+    implementation("androidx.lifecycle:lifecycle-viewmodel-ktx:2.8.7")
+
+    // LiveData를 사용 중이므로 이것도 함께 추가하는 것을 권장합니다
+    implementation("androidx.lifecycle:lifecycle-livedata-ktx:2.8.7")
 }
