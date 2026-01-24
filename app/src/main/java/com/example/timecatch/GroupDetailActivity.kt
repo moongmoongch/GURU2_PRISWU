@@ -6,8 +6,6 @@ import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.lifecycleScope
-import com.example.timecatch.com.example.timecatch.GoldenTimeFinder
-import com.example.timecatch.com.example.timecatch.GoldenTimeResult
 import com.example.timecatch.databinding.ActivityGroupDetailBinding
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
