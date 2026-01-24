@@ -9,6 +9,9 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.TimeCatch">
         <activity
+            android:name=".MyScheduleActivity"
+            android:exported="false" />
+        <activity
             android:name=".GroupDetailActivity"
             android:exported="false" />
         <activity
