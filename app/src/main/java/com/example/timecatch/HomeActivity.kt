@@ -42,17 +42,23 @@ class HomeActivity : AppCompatActivity() {
     }
 
     private fun observeData() {
-        // ViewModel의 데이터가 바뀌면(Firestore 업데이트 등) 자동으로 UI 갱신
+        // ViewModel의 데이터가 바뀌면 자동으로 UI 갱신
         viewModel.groupList.observe(this) { groups ->
             groupAdapter.submitList(groups)
         }
     }
 
     private fun setupListeners() {
+        // ✅ 일정 추가 버튼 클릭 -> 일정 관리 화면으로 이동
+        // (activity_home.xml에 btnAddSchedule 버튼이 있어야 함)
+        binding.btnAddSchedule.setOnClickListener {
+            startActivity(Intent(this, ScheduleManageActivity::class.java))
+        }
+
         // 그룹 생성 버튼 클릭
         binding.btnCreateGroup.setOnClickListener {
             // 다른 팀원이 담당한 '그룹 생성 화면'으로 이동
-            // val intent = Intent(this, CreateGroupActivity::class.java)
+            // val intent = Intent(this, GroupCreateActivity::class.java)
             // startActivity(intent)
         }
     }

@@ -1,7 +1,16 @@
-<resources xmlns:tools="http://schemas.android.com/tools">
-    <!-- Base application theme. -->
-    <style name="Base.Theme.TimeCatch" parent="Theme.Material3.DayNight.NoActionBar">
-        <!-- Customize your dark theme here. -->
-        <!-- <item name="colorPrimary">@color/my_dark_primary</item> -->
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <style name="Theme.TimeCatch" parent="Theme.Material3.DayNight.NoActionBar">
+        <item name="colorPrimary">@color/tc_primary</item>
+        <item name="colorOnPrimary">@android:color/white</item>
+
+        <item name="colorSecondary">@color/tc_primary</item>
+        <item name="colorOnSecondary">@android:color/white</item>
+
+        <item name="colorPrimaryContainer">@color/tc_primary_dark</item>
+
+        <item name="android:statusBarColor">@color/tc_primary_dark</item>
     </style>
+
 </resources>

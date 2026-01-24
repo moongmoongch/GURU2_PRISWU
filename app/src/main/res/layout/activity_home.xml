@@ -8,17 +8,17 @@
     android:background="#F5F5F5">
 
     <TextView
-    android:id="@+id/tvTitle"
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
-    android:text="TimeCatch"
-    android:textColor="@color/tc_primary"
-    android:textSize="28sp"
-    android:textStyle="bold"
-    android:layout_marginTop="40dp"
-    android:layout_marginStart="24dp"
-    app:layout_constraintStart_toStartOf="parent"
-    app:layout_constraintTop_toTopOf="parent" />
+        android:id="@+id/tvTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="TimeCatch"
+        android:textColor="@color/tc_primary"
+        android:textSize="28sp"
+        android:textStyle="bold"
+        android:layout_marginTop="40dp"
+        android:layout_marginStart="24dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <androidx.cardview.widget.CardView
         android:id="@+id/cardListContainer"
@@ -34,6 +34,12 @@
         app:layout_constraintBottom_toTopOf="@id/btnCreateGroup"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent">
+
+        <Button
+            android:id="@+id/btnAddSchedule"
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
+            android:text="일정 추가" />
 
         <LinearLayout
             android:layout_width="match_parent"

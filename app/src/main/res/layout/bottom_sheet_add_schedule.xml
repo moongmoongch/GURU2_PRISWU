@@ -5,91 +5,112 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:padding="20dp"
-    android:background="@color/tc_bg">
+    android:background="@android:color/white">
 
-    <ImageButton
-        android:id="@+id/btnClose"
-        android:layout_width="40dp"
-        android:layout_height="40dp"
-        android:background="@android:color/transparent"
-        android:src="@android:drawable/ic_menu_close_clear_cancel"
-        android:tint="@color/tc_text_dark"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"/>
-
+    <!-- 닫기(X) -->
     <TextView
-        android:id="@+id/tvLabelName"
-        android:layout_width="wrap_content"
+        android:id="@+id/btnClose"
+        android:layout_width="32dp"
+        android:layout_height="32dp"
+        android:gravity="center"
+        android:text="X"
+        android:textStyle="bold"
+        android:textSize="18sp"
+        android:textColor="@color/tc_text_dark"
+        android:background="?attr/selectableItemBackgroundBorderless"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <!-- 일정 이름 라벨 -->
+    <TextView
+        android:id="@+id/tvTitleLabel"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:text="일정 이름"
         android:textStyle="bold"
-        android:textColor="@color/tc_primary"
+        android:textSize="16sp"
+        android:textColor="@color/tc_text_dark"
         app:layout_constraintTop_toBottomOf="@id/btnClose"
         app:layout_constraintStart_toStartOf="parent"
-        android:layout_marginTop="8dp"/>
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginTop="14dp"/>
 
+    <!-- 일정 이름 입력 -->
     <EditText
-        android:id="@+id/etName"
+        android:id="@+id/etTitle"
         android:layout_width="0dp"
-        android:layout_height="44dp"
+        android:layout_height="48dp"
         android:hint="일정을 입력해주세요"
         android:paddingStart="12dp"
         android:paddingEnd="12dp"
-        android:background="@drawable/bg_edit"
-        app:layout_constraintTop_toBottomOf="@id/tvLabelName"
+        android:textColor="@color/tc_text_dark"
+        android:textColorHint="@color/tc_hint"
+        android:background="@drawable/bg_edit_text"
+        app:layout_constraintTop_toBottomOf="@id/tvTitleLabel"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginTop="8dp"/>
+
+    <!-- 시작 시간 -->
+    <TextView
+        android:id="@+id/tvStartLabel"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="시작 시간 선택"
+        android:textStyle="bold"
+        android:textSize="14sp"
+        android:textColor="@color/tc_primary"
+        app:layout_constraintTop_toBottomOf="@id/etTitle"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginTop="18dp"/>
+
+    <TimePicker
+        android:id="@+id/tpStart"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:timePickerMode="spinner"
+        app:layout_constraintTop_toBottomOf="@id/tvStartLabel"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         android:layout_marginTop="6dp"/>
 
+    <!-- 종료 시간 -->
     <TextView
-        android:id="@+id/tvStart"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="시작 시간 선택"
-        android:textStyle="bold"
-        android:textColor="@color/tc_primary"
-        app:layout_constraintTop_toBottomOf="@id/etName"
-        app:layout_constraintStart_toStartOf="parent"
-        android:layout_marginTop="16dp"/>
-
-    <TimePicker
-        android:id="@+id/tpStart"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:timePickerMode="spinner"
-        android:is24HourView="false"
-        app:layout_constraintTop_toBottomOf="@id/tvStart"
-        app:layout_constraintStart_toStartOf="parent"/>
-
-    <TextView
-        android:id="@+id/tvEnd"
-        android:layout_width="wrap_content"
+        android:id="@+id/tvEndLabel"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:text="종료 시간 선택"
         android:textStyle="bold"
+        android:textSize="14sp"
         android:textColor="@color/tc_primary"
         app:layout_constraintTop_toBottomOf="@id/tpStart"
         app:layout_constraintStart_toStartOf="parent"
-        android:layout_marginTop="12dp"/>
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginTop="14dp"/>
 
     <TimePicker
         android:id="@+id/tpEnd"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:timePickerMode="spinner"
-        android:is24HourView="false"
-        app:layout_constraintTop_toBottomOf="@id/tvEnd"
-        app:layout_constraintStart_toStartOf="parent"/>
+        app:layout_constraintTop_toBottomOf="@id/tvEndLabel"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginTop="6dp"/>
 
+    <!-- 추가 버튼 -->
     <Button
         android:id="@+id/btnAdd"
-        android:layout_width="90dp"
-        android:layout_height="44dp"
+        android:layout_width="0dp"
+        android:layout_height="48dp"
         android:text="추가"
-        android:textColor="@color/tc_bg"
+        android:textColor="@android:color/white"
         android:background="@drawable/bg_btn_primary"
+        app:layout_constraintTop_toBottomOf="@id/tpEnd"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"
-        android:layout_marginTop="12dp"/>
+        android:layout_marginTop="16dp"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
