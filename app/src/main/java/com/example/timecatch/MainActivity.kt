@@ -6,6 +6,7 @@ import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.timecatch.databinding.ActivityMainBinding
+import com.example.timecatch.data.AppDatabase
 
 class MainActivity : AppCompatActivity() {
 
