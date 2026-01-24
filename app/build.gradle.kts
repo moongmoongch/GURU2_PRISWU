@@ -14,8 +14,11 @@ android {
         targetSdk = 36
         versionCode = 1
         versionName = "1.0"
-
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
+    }
+
+    buildFeatures {
+        viewBinding = true
     }
 
     buildTypes {
@@ -28,10 +31,13 @@ android {
         }
     }
 
+<<<<<<< HEAD
     buildFeatures {
         viewBinding = true
     }
 
+=======
+>>>>>>> origin/develop
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_11
         targetCompatibility = JavaVersion.VERSION_11
@@ -48,12 +54,24 @@ dependencies {
     implementation(libs.material)
     implementation(libs.androidx.activity)
     implementation(libs.androidx.constraintlayout)
+<<<<<<< HEAD
     implementation("androidx.lifecycle:lifecycle-viewmodel-ktx:2.8.7")
 
+=======
+
+    // Room
+    implementation(libs.room.runtime)
+    implementation(libs.room.ktx)
+    kapt(libs.room.compiler)
+
+    // Coroutines (Room-ktx랑 같이 쓰기 좋게)
+    implementation(libs.kotlinx.coroutines.android)
+>>>>>>> origin/develop
 
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
+<<<<<<< HEAD
 
     // Room
     val roomVersion = "2.6.1"
@@ -61,3 +79,6 @@ dependencies {
     implementation("androidx.room:room-ktx:$roomVersion")
     kapt("androidx.room:room-compiler:$roomVersion")
 }
+=======
+}
+>>>>>>> origin/develop

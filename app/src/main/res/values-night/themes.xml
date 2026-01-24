@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
@@ -11,6 +12,13 @@
         <item name="colorPrimaryContainer">@color/tc_primary_dark</item>
 
         <item name="android:statusBarColor">@color/tc_primary_dark</item>
+=======
+<resources xmlns:tools="http://schemas.android.com/tools">
+    <!-- Base application theme. -->
+    <style name="Base.Theme.GURU" parent="Theme.Material3.DayNight.NoActionBar">
+        <!-- Customize your dark theme here. -->
+        <!-- <item name="colorPrimary">@color/my_dark_primary</item> -->
+>>>>>>> origin/develop
     </style>
 
 </resources>

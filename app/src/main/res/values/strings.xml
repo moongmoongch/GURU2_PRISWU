@@ -1,3 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">TimeCatch</string>
+
+    <!-- App -->
+    <string name="app_name">GURU</string>
+
+    <!-- Login (혹시 로그인 XML에서 쓰면 대비용) -->
+    <string name="login_title">TimeCatch</string>
+    <string name="hint_login_email">이메일</string>
+    <string name="hint_login_password">비밀번호</string>
+    <string name="btn_login">로그인</string>
+    <string name="btn_go_signup">회원가입</string>
+
+    <!-- Sign Up -->
+    <string name="signup_title">회원가입</string>
+    <string name="signup_sub">Create an account to get started</string>
+
+    <string name="label_name">Name</string>
+    <string name="hint_name">이름</string>
+
+    <string name="label_email">Email Address</string>
+    <string name="hint_email">name@email.com</string>
+
+    <string name="label_password">Password</string>
+    <string name="hint_password">Create a password</string>
+    <string name="hint_password_confirm">Confirm password</string>
+
+    <!-- & 같은 문자가 들어가면 &amp; 로 바꿔야 함 -->
+    <string name="agree_text">I\'ve read and agree with the Terms and Conditions and the Privacy Policy.</string>
+
+    <string name="btn_signup">회원가입</string>
+    <string name="go_login">로그인으로 돌아가기</string>
+
 </resources>

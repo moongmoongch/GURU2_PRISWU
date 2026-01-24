@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
@@ -13,4 +14,17 @@
         <item name="android:statusBarColor">@color/tc_primary_dark</item>
     </style>
 
+=======
+<resources>
+    <!-- AppCompat 기반 테마로 변경 (AppCompatActivity와 100% 호환) -->
+    <style name="Theme.TimeCatch" parent="Theme.AppCompat.DayNight.NoActionBar">
+        <item name="colorPrimary">@color/tc_primary</item>
+        <item name="colorPrimaryDark">@color/tc_primary</item>
+        <item name="colorAccent">@color/tc_primary</item>
+
+        <item name="android:statusBarColor">@android:color/white</item>
+        <item name="android:navigationBarColor">@android:color/white</item>
+        <item name="android:windowLightStatusBar">true</item>
+    </style>
+>>>>>>> origin/develop
 </resources>
