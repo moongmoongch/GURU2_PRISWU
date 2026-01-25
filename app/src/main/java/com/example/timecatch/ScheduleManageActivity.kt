@@ -23,17 +23,14 @@ class ScheduleManageActivity : AppCompatActivity() {
     private val cal = Calendar.getInstance()
     private val fmt = SimpleDateFormat("yyyy-MM-dd", Locale.KOREA)
 
-    // 1. 초기값을 -1L로 설정하여 ID가 전달되지 않았을 때를 대비합니다.
     private var currentLoggedInUserId: Long = -1L
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_schedule_manage)
 
-        // 2. MainActivity가 보낸 실제 유저 ID를 받습니다.
         currentLoggedInUserId = intent.getLongExtra("USER_ID", -1L)
 
-        // 보안 체크: ID가 정상적으로 전달되지 않았다면 실행을 중단합니다.
         if (currentLoggedInUserId == -1L) {
             Toast.makeText(this, "잘못된 접근입니다. 다시 로그인해주세요.", Toast.LENGTH_SHORT).show()
             finish()
@@ -43,6 +40,11 @@ class ScheduleManageActivity : AppCompatActivity() {
         db = AppDatabase.getDatabase(this)
         tvSelectedDate = findViewById(R.id.tvSelectedDate)
         recyclerView = findViewById(R.id.rvSchedules)
+
+        // ★ 추가: 좌측 상단 뒤로가기(X) 버튼 로직
+        findViewById<ImageButton>(R.id.btnBack).setOnClickListener {
+            finish() // 현재 화면을 닫고 홈(MainActivity)으로 이동
+        }
 
         scheduleAdapter = ScheduleAdapter { schedule ->
             deleteSchedule(schedule)
@@ -64,7 +66,6 @@ class ScheduleManageActivity : AppCompatActivity() {
     private fun loadSchedules(date: String) {
         lifecycleScope.launch {
             val list = withContext(Dispatchers.IO) {
-                // 수정된 ID를 사용하여 해당 유저의 데이터만 조회합니다.
                 db.scheduleDao().getSchedulesByDate(date, currentLoggedInUserId)
             }
             scheduleAdapter.setItems(list)
@@ -89,7 +90,7 @@ class ScheduleManageActivity : AppCompatActivity() {
             lifecycleScope.launch(Dispatchers.IO) {
                 db.scheduleDao().insert(
                     ScheduleEntity(
-                        userId = currentLoggedInUserId, // 유동적인 ID 저장
+                        userId = currentLoggedInUserId,
                         date = dateStr,
                         title = title,
                         startTime = startTime,
