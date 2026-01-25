@@ -1,5 +1,6 @@
 package com.example.timecatch
 
+import android.content.Intent
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
@@ -7,8 +8,8 @@ import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.example.timecatch.databinding.ItemGroupBinding
 
-class GroupAdapter(private val onItemClick: (Group) -> Unit) :
-    ListAdapter<Group, GroupAdapter.GroupViewHolder>(GroupDiffCallback()) {
+// 생성자에서 (Group)->Unit 제거함! (복잡한 거 뺌)
+class GroupAdapter : ListAdapter<Group, GroupAdapter.GroupViewHolder>(GroupDiffCallback()) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): GroupViewHolder {
         val binding = ItemGroupBinding.inflate(LayoutInflater.from(parent.context), parent, false)
@@ -23,26 +24,32 @@ class GroupAdapter(private val onItemClick: (Group) -> Unit) :
         fun bind(group: Group) {
             binding.tvGroupName.text = group.groupName
 
-            // ▼▼▼ [수정] 확정 여부에 따라 다르게 표시하기 ▼▼▼
+            // 확정 여부 UI
             if (group.confirmedTime != null) {
-                // 1. 확정된 시간이 있을 때 (파란색 강조)
                 binding.tvGroupDate.text = "✅ 확정: ${group.confirmedTime}"
                 binding.tvGroupDate.setTextColor(android.graphics.Color.parseColor("#2D2FA8"))
                 binding.tvGroupDate.setTypeface(null, android.graphics.Typeface.BOLD)
             } else {
-                // 2. 아직 미정일 때 (원래 날짜 표시, 회색)
                 binding.tvGroupDate.text = group.targetDate
                 binding.tvGroupDate.setTextColor(android.graphics.Color.parseColor("#888888"))
                 binding.tvGroupDate.setTypeface(null, android.graphics.Typeface.NORMAL)
             }
+
+            // ★★★ 여기가 수정된 핵심! (Adapter에서 바로 이동) ★★★
             binding.root.setOnClickListener {
-                onItemClick(group)
+                val context = binding.root.context
+                val intent = Intent(context, GroupDetailActivity::class.java)
+
+                // 받는 쪽(DetailActivity)이랑 암호(Key)를 똑같이 맞춰줌
+                intent.putExtra("GROUP_ID", group.id)
+                intent.putExtra("GROUP_NAME", group.groupName)
+
+                context.startActivity(intent)
             }
         }
     }
 
     class GroupDiffCallback : DiffUtil.ItemCallback<Group>() {
-        // ★ 여기가 수정 포인트! groupId 대신 id를 사용합니다.
         override fun areItemsTheSame(oldItem: Group, newItem: Group) = oldItem.id == newItem.id
         override fun areContentsTheSame(oldItem: Group, newItem: Group) = oldItem == newItem
     }

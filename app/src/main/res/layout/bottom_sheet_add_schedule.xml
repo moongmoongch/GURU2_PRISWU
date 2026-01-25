@@ -57,7 +57,6 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:timePickerMode="spinner"
-        android:is24HourView="false"
         app:layout_constraintTop_toBottomOf="@id/tvStart"
         app:layout_constraintStart_toStartOf="parent"/>
 
@@ -77,7 +76,6 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:timePickerMode="spinner"
-        android:is24HourView="false"
         app:layout_constraintTop_toBottomOf="@id/tvEnd"
         app:layout_constraintStart_toStartOf="parent"/>
 

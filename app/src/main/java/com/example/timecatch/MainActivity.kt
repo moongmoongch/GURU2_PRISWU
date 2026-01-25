@@ -39,18 +39,17 @@ class MainActivity : AppCompatActivity() {
 
     // 리사이클러뷰(그룹 목록) 설정
     // MainActivity.kt 안에 있는 함수입니다.
+    // 리사이클러뷰(그룹 목록) 설정
     private fun setupRecyclerView() {
-        groupAdapter = GroupAdapter { selectedGroup ->
-            // 그룹 아이템을 클릭했을 때 실행되는 코드
-            val intent = Intent(this, GroupDetailActivity::class.java)
+        // ★★★ 수정된 부분: 괄호 안에 있던 긴 코드(람다식)를 싹 지우세요! ★★★
+        // 이제 어댑터가 알아서 화면 이동까지 다 합니다.
+        groupAdapter = GroupAdapter()
 
-            // 상세 화면에 데이터 넘겨주기 (택배 보내기 📦)
-            intent.putExtra("GROUP_NAME", selectedGroup.groupName)
-            intent.putExtra("GROUP_DATE", selectedGroup.targetDate)
-            intent.putExtra("GROUP_ID", selectedGroup.id) // DB ID
-
-            startActivity(intent)
+        binding.rvGroupList.apply {
+            layoutManager = LinearLayoutManager(this@MainActivity)
+            adapter = groupAdapter
         }
+
 
         binding.rvGroupList.apply {
             layoutManager = LinearLayoutManager(this@MainActivity)
