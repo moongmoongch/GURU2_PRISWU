@@ -49,6 +49,10 @@
             android:name=".ScheduleManageActivity"
             android:exported="false" />
 
+        <activity
+            android:name=".GroupDetailActivity"
+            android:exported="false" />
+
     </application>
 
 </manifest>
