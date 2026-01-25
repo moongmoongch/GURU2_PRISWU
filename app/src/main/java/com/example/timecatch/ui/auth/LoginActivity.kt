@@ -40,7 +40,12 @@ class LoginActivity : AppCompatActivity() {
 
                     if (user != null) {
                         Toast.makeText(this@LoginActivity, "로그인 성공", Toast.LENGTH_SHORT).show()
-                        startActivity(Intent(this@LoginActivity, MainActivity::class.java))
+
+                        // ★ 수정 포인트: Intent에 유저 고유 ID를 담아서 보냅니다.
+                        val intent = Intent(this@LoginActivity, MainActivity::class.java)
+                        intent.putExtra("USER_ID", user.id)
+                        startActivity(intent)
+
                         finish()
                     } else {
                         Toast.makeText(this@LoginActivity, "로그인 실패 (정보 확인)", Toast.LENGTH_SHORT).show()
