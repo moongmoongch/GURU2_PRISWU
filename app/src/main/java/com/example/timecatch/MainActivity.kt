@@ -74,7 +74,7 @@ class MainActivity : AppCompatActivity() {
 
         // 2. 내 일정 관리 버튼
         binding.btnManageSchedule.setOnClickListener {
-            val intent = Intent(this, MyScheduleActivity::class.java)
+            val intent = Intent(this, ScheduleManageActivity::class.java)
             startActivity(intent)
         }
 
