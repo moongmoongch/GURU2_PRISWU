@@ -5,11 +5,20 @@ import androidx.room.PrimaryKey
 
 @Entity(tableName = "group_table")
 data class Group(
-    @PrimaryKey(autoGenerate = true) val id: Int = 0, // 혹시 uid로 되어있으면 그대로 두세요
+    @PrimaryKey(autoGenerate = true) val id: Int = 0,
+
+    // 누가 만든 그룹인지(방장)
+    val ownerUserId: Long,
+
     val groupName: String,
     val targetDate: String,
-    val invitedIds: String, // List를 String으로 변환해서 저장했었죠?
 
-    // ▼▼▼ [추가] 확정된 시간을 저장할 변수 (처음엔 null) ▼▼▼
+    // 화면 표시용 / 초대 기록용 (이메일 기반으로 입력 받는다고 가정)
+    val invitedEmails: String,
+
+    // 멤버 userId들을 ",1,2,3," 형태로 저장 (검색/포함 여부 체크용)
+    val memberUserIds: String,
+
+    // 확정된 시간
     var confirmedTime: String? = null
 )

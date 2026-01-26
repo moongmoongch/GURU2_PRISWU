@@ -9,13 +9,13 @@ import com.example.timecatch.GroupDao
 
 @Database(
     entities = [Group::class, UserEntity::class, ScheduleEntity::class],
-    version = 3, // 버전업 필수
+    version = 4, // ★ 3 -> 4로 증가
     exportSchema = false
 )
 abstract class AppDatabase : RoomDatabase() {
     abstract fun groupDao(): GroupDao
     abstract fun userDao(): UserDao
-    abstract fun scheduleDao(): ScheduleDao // 추가
+    abstract fun scheduleDao(): ScheduleDao
 
     companion object {
         @Volatile private var INSTANCE: AppDatabase? = null
@@ -25,7 +25,8 @@ abstract class AppDatabase : RoomDatabase() {
                     context.applicationContext,
                     AppDatabase::class.java,
                     "timecatch.db"
-                ).fallbackToDestructiveMigration()
+                )
+                    .fallbackToDestructiveMigration()
                     .allowMainThreadQueries() // 해커톤 시연용
                     .build()
                 INSTANCE = instance

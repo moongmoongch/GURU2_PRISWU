@@ -28,7 +28,7 @@ class LoginActivity : AppCompatActivity() {
             val pw = binding.etPassword.text.toString().trim()
 
             if (email.isEmpty() || pw.isEmpty()) {
-                Toast.makeText(this, "이메일/비번을 입력해주세요", Toast.LENGTH_SHORT).show()
+                Toast.makeText(this, "이메일/비밀번호를 입력해주세요", Toast.LENGTH_SHORT).show()
                 return@setOnClickListener
             }
 
@@ -41,7 +41,6 @@ class LoginActivity : AppCompatActivity() {
                     if (user != null) {
                         Toast.makeText(this@LoginActivity, "로그인 성공", Toast.LENGTH_SHORT).show()
 
-                        // ★ 수정 포인트: Intent에 유저 고유 ID를 담아서 보냅니다.
                         val intent = Intent(this@LoginActivity, MainActivity::class.java)
                         intent.putExtra("USER_ID", user.id)
                         startActivity(intent)

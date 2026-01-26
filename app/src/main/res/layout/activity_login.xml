@@ -24,7 +24,7 @@
         android:id="@+id/etEmail"
         android:layout_width="0dp"
         android:layout_height="48dp"
-        android:hint="이메일"
+        android:hint="아이디"
         android:inputType="textEmailAddress"
         android:autofillHints="emailAddress"
         android:background="@android:drawable/edit_text"
