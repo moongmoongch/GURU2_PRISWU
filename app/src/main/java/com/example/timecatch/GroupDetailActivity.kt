@@ -1,63 +1,158 @@
 package com.example.timecatch
 
+import android.graphics.Color
 import android.os.Bundle
 import android.view.View
 import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.lifecycleScope
+import com.example.timecatch.data.AppDatabase
 import com.example.timecatch.databinding.ActivityGroupDetailBinding
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
-import com.example.timecatch.data.AppDatabase
+import android.util.Log
 
 class GroupDetailActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityGroupDetailBinding
     private lateinit var db: AppDatabase
     private var groupId: Int = -1
+    private var isLeader = false // DB 데이터에 따라 변경됨
 
-    // 테스트용: true면 방장 권한(선택 버튼 보임), false면 팀원
-    private val isLeader = true
+    // 현재 사용자 ID (로그인 시 저장해둔 값이라고 가정, Intent로 받아야 함)
+    private var currentUserId: Long = -1L
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityGroupDetailBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        // 팝업 느낌을 위한 투명 배경 설정
         window.setBackgroundDrawableResource(android.R.color.transparent)
 
-        // 0. DB 초기화
         db = AppDatabase.getDatabase(this)
 
-        // 1. Intent 데이터 받기
+        // Intent 데이터 받기
         val groupName = intent.getStringExtra("GROUP_NAME") ?: "이름 없음"
         groupId = intent.getIntExtra("GROUP_ID", -1)
 
-        // UI 설정
+        // ★ 메인이나 로그인 화면에서 넘어올 때 USER_ID를 꼭 줘야 함! (임시로 1L 등 설정 가능)
+        currentUserId = intent.getLongExtra("USER_ID", 1L)
+
         binding.tvGroupName.text = groupName
         binding.btnClose.setOnClickListener { finish() }
 
-        // 2. 골든 타임 계산 및 표시 시작
-        showGoldenTimeResults()
+        // 로딩 시작
+        loadDataAndShowGoldenTime()
     }
 
-    private fun showGoldenTimeResults() {
-        // [STEP 1] 데이터를 가져온다. (함수로 분리됨!)
-        // 지금은 가짜 데이터를 가져오지만, 나중엔 이 함수 안에서 DB를 뒤져올 것입니다.
-        val (totalMembers, memberData) = fetchGroupSchedules(groupId)
 
-        // [STEP 2] 알고리즘 가동
-        val results = GoldenTimeFinder.analyze(totalMembers, memberData)
+    private fun loadDataAndShowGoldenTime() {
+        lifecycleScope.launch(Dispatchers.IO) {
+            // 1. 그룹 정보 가져오기
+            val group = db.groupDao().getGroupById(groupId) ?: return@launch
 
-        // [STEP 3] 결과 UI 그리기
-        binding.llResultContainer.removeAllViews() // 초기화
+            // (테스트용) 방장 권한 true
+            isLeader = true
+
+            // 멤버 ID 파싱
+            val memberIds = group.memberUserIds
+                .split(",")
+                .filter { it.isNotEmpty() }
+                .map { it.toLong() }
+
+            val memberAvailabilities = mutableMapOf<String, List<String>>()
+
+            for (memberId in memberIds) {
+                // 이름 가져오기
+                val name = db.userDao().getUserName(memberId) ?: "멤버 $memberId"
+
+                // ==========================================================
+                // ★ [여기가 핵심] "2026년 1월 28일"을 숫자 날짜로 자동 변환!
+                // ==========================================================
+                val rawDate = group.targetDate // "2026년 1월 28일"
+                val searchDates = mutableListOf<String>()
+
+                // 1. 숫자만 추출하는 정규식 (년, 월, 일 글자 떼기)
+                val regex = Regex("(\\d+)[^0-9]+(\\d+)[^0-9]+(\\d+)")
+                val match = regex.find(rawDate)
+
+                if (match != null) {
+                    val (yStr, mStr, dStr) = match.destructured
+                    val y = yStr.toInt()
+                    val m = mStr.toInt()
+                    val d = dStr.toInt()
+
+                    // DB에 저장될 수 있는 모든 경우의 수 생성
+                    searchDates.add(String.format("%d-%02d-%02d", y, m, d)) // 2026-01-28
+                    searchDates.add("$y-$m-$d")                             // 2026-1-28
+                    searchDates.add(String.format("%d.%02d.%02d", y, m, d)) // 2026.01.28
+                    searchDates.add("$y.$m.$d")                             // 2026.1.28
+                } else {
+                    // 정규식 실패 시 원본이라도 넣기
+                    searchDates.add(rawDate)
+                }
+
+                // 2. 만든 날짜들로 DB 싹 다 뒤지기
+                val allSchedules = mutableListOf<com.example.timecatch.data.ScheduleEntity>()
+                for (dateStr in searchDates) {
+                    val schedules = db.scheduleDao().getSchedulesByDate(dateStr, memberId)
+                    allSchedules.addAll(schedules)
+                }
+                // ==========================================================
+
+                // 3. "가능한 시간"으로 변환 (중복 제거 포함)
+                // (여러 포맷으로 검색하다 보면 같은 스케줄이 중복될 수 있으니 distinct() 처리)
+                val distinctSchedules = allSchedules.distinctBy { it.id }
+                val availableSlots = convertBusyToAvailable(distinctSchedules)
+                memberAvailabilities[name] = availableSlots
+            }
+
+            // [STEP 3] 알고리즘 가동
+            val results = GoldenTimeFinder.analyze(memberIds.size, memberAvailabilities)
+
+            // [STEP 4] 결과 화면에 보여주기
+            withContext(Dispatchers.Main) {
+                updateResultUI(results)
+            }
+        }
+    }
+
+    // ★ 스케줄(Busy) 데이터를 받아서 -> 가능한 시간(Available) 리스트로 변환하는 함수
+    private fun convertBusyToAvailable(schedules: List<com.example.timecatch.data.ScheduleEntity>): List<String> {
+        // 하루 24시간을 30분 단위 48개 슬롯으로 표현 (true: 가능, false: 바쁨)
+        val isAvailable = BooleanArray(48) { true }
+
+        for (schedule in schedules) {
+            val startIdx = timeStringToSlotIndex(schedule.startTime)
+            val endIdx = timeStringToSlotIndex(schedule.endTime)
+
+            // 스케줄 있는 시간대를 false(불가능)로 마킹
+            for (i in startIdx until endIdx) {
+                if (i in 0 until 48) {
+                    isAvailable[i] = false
+                }
+            }
+        }
+
+        // true(가능)인 슬롯만 뽑아서 "13:00", "13:30" 형태의 문자열 리스트로 반환
+        val availableTimeStrings = mutableListOf<String>()
+        for (i in 0 until 48) {
+            if (isAvailable[i]) {
+                availableTimeStrings.add(slotIndexToTimeString(i))
+            }
+        }
+        return availableTimeStrings
+    }
+
+    // UI 그리는 부분 (기존 코드 활용)
+    private fun updateResultUI(results: List<GoldenTimeResult>) {
+        binding.llResultContainer.removeAllViews()
 
         if (results.isEmpty()) {
             val emptyView = TextView(this).apply {
-                text = "겹치는 시간이 없음"
+                text = "모두가 가능한 시간이 없습니다 ㅠㅠ"
                 textSize = 14f
                 setPadding(0, 20, 0, 0)
             }
@@ -69,23 +164,6 @@ class GroupDetailActivity : AppCompatActivity() {
         }
     }
 
-    // ★★★ [핵심] 데이터를 가져오는 함수 (나중에 여기만 진짜 DB 코드로 바꾸면 됨) ★★★
-    private fun fetchGroupSchedules(targetGroupId: Int): Pair<Int, Map<String, List<String>>> {
-        // TODO: 나중에 Room DB나 Firebase에서 해당 그룹 멤버들의 일정을 조회하는 코드로 변경 예정
-
-        // --- 지금은 가짜 데이터 (Mock Data) 리턴 ---
-        val mockTotalMembers = 4
-        val mockData = mapOf(
-            "나(방장)" to listOf("13:00", "13:30", "14:00", "15:00"),
-            "김철수" to listOf("13:00", "13:30", "16:00"),
-            "이영희" to listOf("13:00", "14:00", "15:00"),
-            "박민수" to listOf("14:00", "15:00")
-        )
-
-        return Pair(mockTotalMembers, mockData)
-    }
-
-    // 결과 아이템 하나를 화면에 붙이는 함수
     private fun addResultItem(result: GoldenTimeResult) {
         val itemView = layoutInflater.inflate(R.layout.item_golden_time, binding.llResultContainer, false)
 
@@ -99,7 +177,6 @@ class GroupDetailActivity : AppCompatActivity() {
         val names = result.memberNames.joinToString(", ")
         tvMembers.text = "$names 가능 (${result.availableCount}/${result.totalMembers})"
 
-        // 방장 권한 처리
         if (isLeader) {
             btnSelect.visibility = View.VISIBLE
             btnSelect.setOnClickListener {
@@ -112,36 +189,40 @@ class GroupDetailActivity : AppCompatActivity() {
         binding.llResultContainer.addView(itemView)
     }
 
-    // 시간을 확정하는 함수 (DB 저장 + UI 갱신)
     private fun confirmTime(confirmedTimeStr: String) {
         lifecycleScope.launch(Dispatchers.IO) {
-            // 1. DB 업데이트
-            if (groupId != -1) {
-                val group = db.groupDao().getGroupById(groupId)
-                if (group != null) {
-                    group.confirmedTime = confirmedTimeStr
-                    db.groupDao().update(group)
-                }
+            val group = db.groupDao().getGroupById(groupId)
+            if (group != null) {
+                group.confirmedTime = confirmedTimeStr
+                db.groupDao().update(group)
             }
-
-            // 2. UI 업데이트
             withContext(Dispatchers.Main) {
-                Toast.makeText(this@GroupDetailActivity, "시간이 확정되었습니다! 🎉", Toast.LENGTH_SHORT).show()
-
-                // 화면 정리 후 확정된 것만 보여주기
+                Toast.makeText(this@GroupDetailActivity, "시간 확정 완료!", Toast.LENGTH_SHORT).show()
+                binding.tvGoldenTimeLabel.text = "최종 확정 시간"
                 binding.llResultContainer.removeAllViews()
 
+                // 확정된 뷰 하나만 다시 그림
                 val finalView = layoutInflater.inflate(R.layout.item_golden_time, binding.llResultContainer, false)
-                finalView.findViewById<TextView>(R.id.tvTimeInfo).apply {
-                    text = confirmedTimeStr
-                    setTextColor(android.graphics.Color.parseColor("#2D2FA8")) // 파란색 강조
-                }
-                finalView.findViewById<TextView>(R.id.tvMemberInfo).text = "최종 확정된 시간입니다."
-                finalView.findViewById<TextView>(R.id.btnSelect).visibility = View.GONE // 버튼 숨김
-
+                finalView.findViewById<TextView>(R.id.tvTimeInfo).text = confirmedTimeStr
+                finalView.findViewById<TextView>(R.id.tvTimeInfo).setTextColor(Color.parseColor("#2D2FA8"))
+                finalView.findViewById<TextView>(R.id.tvMemberInfo).text = "모임 시간이 확정되었습니다."
+                finalView.findViewById<TextView>(R.id.btnSelect).visibility = View.GONE
                 binding.llResultContainer.addView(finalView)
-                binding.tvGoldenTimeLabel.text = "최종 확정 시간"
             }
         }
+    }
+
+    // --- 시간 변환 유틸 함수들 (GoldenTimeFinder에 있는 것과 동일 로직) ---
+    private fun timeStringToSlotIndex(time: String): Int {
+        val parts = time.split(":")
+        val h = parts[0].toInt()
+        val m = parts[1].toInt()
+        return h * 2 + (if (m >= 30) 1 else 0)
+    }
+
+    private fun slotIndexToTimeString(index: Int): String {
+        val h = index / 2
+        val m = (index % 2) * 30
+        return String.format("%02d:%02d", h, m)
     }
 }
