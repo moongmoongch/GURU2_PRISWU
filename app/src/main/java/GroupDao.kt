@@ -32,4 +32,7 @@ interface GroupDao {
 
     @Update
     fun update(group: Group)
+
+    @Query("DELETE FROM group_table WHERE id = :groupId")
+    fun deleteGroupById(groupId: Int)
 }

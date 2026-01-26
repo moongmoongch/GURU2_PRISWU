@@ -1,4 +1,4 @@
-서울여자대학교 GURU2 PRISWU팀의 깃허브입니다.
+서울여자대학교 GURU2 TIMESWU팀의 깃허브입니다.
 
 <br>
 

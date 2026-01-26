@@ -31,4 +31,14 @@ class HomeViewModel(application: Application) : AndroidViewModel(application) {
             }
         }
     }
+    fun deleteGroup(groupId: Int, currentUserId: Long) {
+        viewModelScope.launch(Dispatchers.IO) {
+            // 1. DB에서 삭제
+            db.groupDao().deleteGroupById(groupId)
+
+            // 2. 삭제 후 목록 갱신 (UI 업데이트)
+            // (이미 fetchMyGroups 함수가 있으므로 재사용)
+            fetchMyGroups(currentUserId)
+        }
+    }
 }

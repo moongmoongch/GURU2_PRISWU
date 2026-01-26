@@ -6,6 +6,7 @@ import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.timecatch.databinding.ActivityMainBinding
+import androidx.appcompat.app.AlertDialog // [추가] 다이얼로그용
 
 class MainActivity : AppCompatActivity() {
 
@@ -39,12 +40,29 @@ class MainActivity : AppCompatActivity() {
         viewModel.fetchMyGroups(userId) // ★ 내 id로 필터된 그룹만 로드
     }
 
+    // [수정] 어댑터 초기화 부분 변경
     private fun setupRecyclerView() {
-        groupAdapter = GroupAdapter()
+        // 어댑터 생성 시, 롱클릭했을 때 실행할 동작을 정의
+        groupAdapter = GroupAdapter { groupId ->
+            showDeleteDialog(groupId)
+        }
+
         binding.rvGroupList.apply {
             layoutManager = LinearLayoutManager(this@MainActivity)
             adapter = groupAdapter
         }
+    }
+
+    private fun showDeleteDialog(groupId: Int) {
+        AlertDialog.Builder(this)
+            .setTitle("그룹 삭제")
+            .setMessage("정말로 이 그룹을 삭제하시겠습니까?")
+            .setPositiveButton("삭제") { _, _ ->
+                // 뷰모델에게 삭제 요청
+                viewModel.deleteGroup(groupId, userId)
+            }
+            .setNegativeButton("취소", null)
+            .show()
     }
 
     private fun observeData() {
