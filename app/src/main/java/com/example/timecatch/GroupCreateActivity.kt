@@ -42,7 +42,6 @@ class GroupCreateActivity : AppCompatActivity() {
 
         // 초기값: 오늘 날짜
         selectedDateMillis = b.calendarView.date
-        b.tvSelectedDate.text = "선택된 날짜: ${formatDateFull(selectedDateMillis!!)}"
 
         b.calendarView.setOnDateChangeListener { _, year, month, dayOfMonth ->
             val cal = Calendar.getInstance().apply {
@@ -55,7 +54,6 @@ class GroupCreateActivity : AppCompatActivity() {
                 set(Calendar.MILLISECOND, 0)
             }
             selectedDateMillis = cal.timeInMillis
-            b.tvSelectedDate.text = "선택된 날짜: ${formatDateFull(cal.timeInMillis)}"
         }
 
         // 친구 추가(이메일)

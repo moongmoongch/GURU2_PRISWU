@@ -14,27 +14,27 @@
         android:layout_marginStart="16dp"
         android:layout_marginTop="20dp"
         android:background="@android:color/transparent"
-        android:src="@android:drawable/ic_menu_close_clear_cancel"
-        android:tint="@color/tc_text_dark"
+        android:src="@drawable/ic_back"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"/>
-
-    <TextView
-        android:id="@+id/tvTitle"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="일정 관리"
-        android:textStyle="bold"
-        android:textSize="18sp"
-        android:textColor="@color/tc_primary"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        android:layout_marginTop="30dp"/>
 
     <!-- 월 이동 영역 -->
 
     <!-- 달력 -->
+    <TextView
+        android:id="@+id/tvTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="100dp"
+        android:text="일정 관리"
+        android:textColor="#2D2FA8"
+        android:textSize="24sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="@id/btnBack"
+        app:layout_constraintStart_toEndOf="@id/btnBack"
+        app:layout_constraintTop_toTopOf="@id/btnBack"
+        app:layout_constraintVertical_bias="0.0" />
+
     <CalendarView
         android:id="@+id/calendarView"
         android:layout_width="0dp"
@@ -42,7 +42,8 @@
         android:paddingTop="15dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tvTitle" />
+        app:layout_constraintTop_toBottomOf="@+id/tvTitle"
+        android:theme="@style/PurpleCalendarTheme"/>
 
     <!-- 선택된 날짜 표시 -->
     <TextView
