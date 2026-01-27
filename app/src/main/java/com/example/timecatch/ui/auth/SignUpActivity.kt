@@ -23,6 +23,11 @@ class SignUpActivity : AppCompatActivity() {
 
         val userDao = AppDatabase.getDatabase(this).userDao()
 
+        // ✅ 이용약관 보기 클릭 -> TermsActivity로 이동
+        binding.tvTermsLink.setOnClickListener {
+            startActivity(Intent(this, TermsActivity::class.java))
+        }
+
         binding.btnSignUp.setOnClickListener {
             val name = binding.etName.text.toString().trim()
             val email = binding.etEmail.text.toString().trim()
@@ -67,7 +72,6 @@ class SignUpActivity : AppCompatActivity() {
 
                     Toast.makeText(this@SignUpActivity, "회원가입 완료되었습니다. 로그인을 해주세요.", Toast.LENGTH_SHORT).show()
 
-                    // 회원가입 완료 후 -> 로그인으로 복귀
                     val intent = Intent(this@SignUpActivity, LoginActivity::class.java)
                     intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_SINGLE_TOP
                     startActivity(intent)
@@ -80,7 +84,7 @@ class SignUpActivity : AppCompatActivity() {
         }
 
         binding.tvGoLogin.setOnClickListener {
-            finish() // 그냥 뒤로(로그인) 돌아가도 됨
+            finish()
         }
     }
 }

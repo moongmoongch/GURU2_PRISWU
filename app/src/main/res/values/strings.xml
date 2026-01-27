@@ -2,7 +2,7 @@
 <resources>
 
     <!-- App -->
-    <string name="app_name">GURU</string>
+    <string name="app_name">TimeCatch</string>
 
     <!-- Login (혹시 로그인 XML에서 쓰면 대비용) -->
     <string name="login_title">TimeCatch</string>

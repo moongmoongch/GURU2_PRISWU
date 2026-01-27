@@ -3,7 +3,7 @@
     <application
         android:allowBackup="true"
         android:supportsRtl="true"
-        android:label="GURU"
+        android:label="TimeCatch"
         android:icon="@mipmap/ic_launcher"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:theme="@style/Theme.TimeCatch">
@@ -29,8 +29,12 @@
             android:exported="false"
             android:windowSoftInputMode="adjustResize" />
 
-        <!-- 홈/메인 -->
+        <!-- ✅ 이용약관 화면 -->
+        <activity
+            android:name=".ui.auth.TermsActivity"
+            android:exported="false" />
 
+        <!-- 홈/메인 -->
         <activity
             android:name=".MainActivity"
             android:exported="false" />
@@ -44,13 +48,13 @@
             android:name=".GroupCreateActivity"
             android:exported="false" />
 
+        <activity
+            android:name=".GroupDetailActivity"
+            android:exported="false" />
+
         <!-- 스케줄 관리 -->
         <activity
             android:name=".ScheduleManageActivity"
-            android:exported="false" />
-
-        <activity
-            android:name=".GroupDetailActivity"
             android:exported="false" />
 
     </application>
