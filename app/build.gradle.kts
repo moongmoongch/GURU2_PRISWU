@@ -50,6 +50,7 @@ dependencies {
     // Room
     implementation(libs.room.runtime)
     implementation(libs.room.ktx)
+    implementation(libs.androidx.leanback)
     kapt(libs.room.compiler)
 
     // Coroutines (Room-ktx랑 같이 쓰기 좋게)
