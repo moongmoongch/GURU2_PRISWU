@@ -13,6 +13,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import android.util.Log
+import android.widget.TimePicker // 이게 반드시 있어야 합니다.
 
 class GroupDetailActivity : AppCompatActivity() {
 
@@ -180,7 +181,8 @@ class GroupDetailActivity : AppCompatActivity() {
         if (isLeader) {
             btnSelect.visibility = View.VISIBLE
             btnSelect.setOnClickListener {
-                confirmTime(timeString)
+                // ★ 바로 확정하지 않고 구체적인 시간을 정하는 다이얼로그를 띄웁니다.
+                showPreciseTimePicker(result)
             }
         } else {
             btnSelect.visibility = View.GONE
@@ -224,5 +226,41 @@ class GroupDetailActivity : AppCompatActivity() {
         val h = index / 2
         val m = (index % 2) * 30
         return String.format("%02d:%02d", h, m)
+    }
+
+    private fun showPreciseTimePicker(result: GoldenTimeResult) {
+        val view = layoutInflater.inflate(R.layout.dialog_time_picker, null)
+        val tpClock = view.findViewById<TimePicker>(R.id.tpClock)
+        val tvHint = view.findViewById<TextView>(R.id.tvDialogHint)
+
+        tvHint.text = "범위: ${result.startTime} ~ ${result.endTime}"
+
+        // 초기 시간 설정
+        tpClock.hour = result.startTime.split(":")[0].toInt()
+        tpClock.minute = 0
+
+        // ★ 실시간 범위 검증 (시계 바늘 제어)
+        tpClock.setOnTimeChangedListener { _, hour, minute ->
+            val selectedTime = String.format("%02d:%02d", hour, minute)
+
+            // 이 검증 로직이 스피너 휠을 강제로 제어합니다.
+            if (selectedTime < result.startTime) {
+                tpClock.hour = result.startTime.split(":")[0].toInt()
+                tpClock.minute = result.startTime.split(":")[1].toInt()
+            } else if (selectedTime > result.endTime) {
+                tpClock.hour = result.endTime.split(":")[0].toInt()
+                tpClock.minute = result.endTime.split(":")[1].toInt()
+            }
+        }
+
+        // 다이얼로그 생성 및 실행
+        androidx.appcompat.app.AlertDialog.Builder(this)
+            .setView(view)
+            .setPositiveButton("확정") { _, _ ->
+                val confirmedTime = String.format("%02d:%02d", tpClock.hour, tpClock.minute)
+                confirmTime(confirmedTime) // 최종 확정 로직 실행
+            }
+            .setNegativeButton("취소", null)
+            .show()
     }
 }
